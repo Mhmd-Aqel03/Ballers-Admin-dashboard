@@ -1,6 +1,6 @@
 const API = import.meta.env.VITE_API + "/admin";
 
-const getAllCourts = async () => {
+const getAllSessions = async () => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -8,7 +8,7 @@ const getAllCourts = async () => {
   }
 
   try {
-    const res = await fetch(`${API}/getAllCourts`, {
+    const res = await fetch(`${API}/getAllSessions`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         Accept: "application/json",
@@ -20,8 +20,8 @@ const getAllCourts = async () => {
     if (res.status === 403) {
       localStorage.removeItem("token");
       window.location.href = "/";
-    } else if (res.status === 500){
-      throw new Error()
+    } else if (res.status === 500) {
+      throw new Error();
     }
 
     console.log(data);
@@ -33,7 +33,7 @@ const getAllCourts = async () => {
   }
 };
 
-const createCourt = async (data) => {
+const createSession = async (data) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -41,7 +41,7 @@ const createCourt = async (data) => {
   }
 
   try {
-    const res = await fetch(`${API}/createCourt`, {
+    const res = await fetch(`${API}/createSession`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
@@ -50,6 +50,7 @@ const createCourt = async (data) => {
       method: "POST",
       body: JSON.stringify(data),
     });
+
     const resData = await res.json();
 
     if (res.status === 403) {
@@ -63,13 +64,13 @@ const createCourt = async (data) => {
       throw new Error();
     }
   } catch (error) {
-    alert("Something went wrong with Creating Court!");
+    alert("Something went wrong with Creating Session!");
 
     console.error(error);
   }
 };
 
-const updateCourt = async (data, id) => {
+const updateSession = async (data, id) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -77,7 +78,7 @@ const updateCourt = async (data, id) => {
   }
 
   try {
-    const res = await fetch(`${API}/updateCourt/${id}`, {
+    const res = await fetch(`${API}/updateSession/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
@@ -100,13 +101,13 @@ const updateCourt = async (data, id) => {
       throw new Error();
     }
   } catch (error) {
-    alert("Something went wrong with updateing Court!");
+    alert("Something went wrong with updateing Session!");
 
     console.error(error);
   }
 };
 
-const deleteCourt = async (id) => {
+const deleteSession = async (id) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -114,7 +115,7 @@ const deleteCourt = async (id) => {
   }
 
   try {
-    const res = await fetch(`${API}/deleteCourt/${id}`, {
+    const res = await fetch(`${API}/deleteSession/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         Accept: "application/json",
@@ -122,22 +123,22 @@ const deleteCourt = async (id) => {
       method: "DELETE",
     });
 
-    if (res.status === 403) {
-      localStorage.removeItem("token");
-      window.location.href = "/";
-    } else if (res.status === 500) {
-      throw new Error();
-    }
+     if (res.status === 403) {
+       localStorage.removeItem("token");
+       window.location.href = "/";
+     } else if (res.status === 500) {
+       throw new Error();
+     }
   } catch (error) {
-    alert("Something went wrong with Deleting Court!");
+    alert("Something went wrong with Deleting Session!");
 
     console.error(error);
   }
 };
 
 export default {
-  getAllCourts,
-  createCourt,
-  updateCourt,
-  deleteCourt,
+  getAllSessions,
+  deleteSession,
+  updateSession,
+  createSession,
 };

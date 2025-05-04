@@ -8,6 +8,10 @@ import {
   Button,
   FormControlLabel,
   Checkbox,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 const FormDialog = ({
@@ -41,32 +45,54 @@ const FormDialog = ({
     <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        {fields.map((field) =>
-          field.type === "checkbox" ? (
-            <FormControlLabel
-              key={field.name}
-              control={
-                <Checkbox
+        {fields.map((field) => {
+          if (field.type === "checkbox") {
+            return (
+              <FormControlLabel
+                key={field.name}
+                control={
+                  <Checkbox
+                    name={field.name}
+                    checked={formValues[field.name] || false}
+                    onChange={handleChange}
+                  />
+                }
+                label={field.label}
+              />
+            );
+          } else if (field.type === "select") {
+            return (
+              <FormControl fullWidth margin="dense" key={field.name}>
+                <InputLabel>{field.label}</InputLabel>
+                <Select
                   name={field.name}
-                  checked={formValues[field.name] || false}
+                  value={formValues[field.name] || ""}
                   onChange={handleChange}
-                />
-              }
-              label={field.label}
-            />
-          ) : (
-            <TextField
-              key={field.name}
-              margin="dense"
-              name={field.name}
-              label={field.label}
-              type={field.type}
-              fullWidth
-              value={formValues[field.name] || ""}
-              onChange={handleChange}
-            />
-          )
-        )}
+                  label={field.label}
+                >
+                  {field.options.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            );
+          } else {
+            return (
+              <TextField
+                key={field.name}
+                margin="dense"
+                name={field.name}
+                label={field.label}
+                type={field.type}
+                fullWidth
+                value={formValues[field.name] || ""}
+                onChange={handleChange}
+              />
+            );
+          }
+        })}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="inherit">

@@ -1,6 +1,6 @@
 const API = import.meta.env.VITE_API + "/admin";
 
-const getAllCourts = async () => {
+const getAllReferees = async () => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -8,7 +8,7 @@ const getAllCourts = async () => {
   }
 
   try {
-    const res = await fetch(`${API}/getAllCourts`, {
+    const res = await fetch(`${API}/getAllReferees`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         Accept: "application/json",
@@ -20,10 +20,9 @@ const getAllCourts = async () => {
     if (res.status === 403) {
       localStorage.removeItem("token");
       window.location.href = "/";
-    } else if (res.status === 500){
-      throw new Error()
+    } else if (res.status === 500) {
+      throw new Error();
     }
-
     console.log(data);
     return data;
   } catch (error) {
@@ -33,7 +32,7 @@ const getAllCourts = async () => {
   }
 };
 
-const createCourt = async (data) => {
+const createReferee = async (data) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -41,7 +40,7 @@ const createCourt = async (data) => {
   }
 
   try {
-    const res = await fetch(`${API}/createCourt`, {
+    const res = await fetch(`${API}/createReferee`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
@@ -50,26 +49,27 @@ const createCourt = async (data) => {
       method: "POST",
       body: JSON.stringify(data),
     });
+
     const resData = await res.json();
 
     if (res.status === 403) {
       localStorage.removeItem("token");
       window.location.href = "/";
     } else if (res.status === 400) {
-      const err = resData.values(resData)[0];
+      const err = Object.values(resData)[0];
 
       alert("Bad Request: " + err);
     } else if (res.status === 500) {
       throw new Error();
     }
   } catch (error) {
-    alert("Something went wrong with Creating Court!");
+    alert("Something went wrong with Creating Referee!");
 
     console.error(error);
   }
 };
 
-const updateCourt = async (data, id) => {
+const deleteReferee = async (id) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -77,44 +77,7 @@ const updateCourt = async (data, id) => {
   }
 
   try {
-    const res = await fetch(`${API}/updateCourt/${id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      method: "PUT",
-      body: JSON.stringify(data),
-    });
-
-    const resData = res.json();
-
-    if (res.status === 403) {
-      localStorage.removeItem("token");
-      window.location.href = "/";
-    } else if (res.status === 400) {
-      const err = resData.values(resData)[0];
-
-      alert("Bad Request: " + err);
-    } else if (res.status === 500) {
-      throw new Error();
-    }
-  } catch (error) {
-    alert("Something went wrong with updateing Court!");
-
-    console.error(error);
-  }
-};
-
-const deleteCourt = async (id) => {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    window.location.href = "/";
-  }
-
-  try {
-    const res = await fetch(`${API}/deleteCourt/${id}`, {
+    const res = await fetch(`${API}/deleteReferee/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         Accept: "application/json",
@@ -136,8 +99,7 @@ const deleteCourt = async (id) => {
 };
 
 export default {
-  getAllCourts,
-  createCourt,
-  updateCourt,
-  deleteCourt,
+  getAllReferees,
+  createReferee,
+  deleteReferee,
 };
