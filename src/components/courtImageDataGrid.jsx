@@ -1,33 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
-import courtService from "../services/courtsServices";
+import courtImagesService from "../services/courtImagesService";
 
-const CourtDataGrid = ({refresh, onDelete, onUpdate}) => {
-  const [courts, setCourts] = useState([]);
+const CourtImagesDataGrid = ({refresh, onDelete}) => {
+  const [courtImages, setCourtImages] = useState([]);
   
 
   useEffect(() => {
-    const fetchCourts = async () => {
+    const fetchCourtImages = async () => {
       try {
-        const data = await courtService.getAllCourts();
+        const data = await courtImagesService.getAllCourtImages();
 
-        setCourts(data.courts);
+        setCourtImages(data.courtImages);
       } catch (err) {
         console.error(err);
       }
     };
-    fetchCourts();
+    fetchCourtImages();
   }, [refresh]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
-    { field: "name", headerName: "Name", width: 200 },
-    { field: "city", headerName: "City", width: 200 },
-    { field: "placeId", headerName: "Goolge Place ID", width: 250 },
-    { field: "hasBathroom", headerName: "Bathroom?", width: 200 },
-    { field: "hasCafeteria", headerName: "Cafeteria?", width: 200 },
-    { field: "hasParking", headerName: "Parking?", width: 200 },
+    { field: "courtId", headerName: "Court ID", width: 200 },
+    { field: "photoUrl", headerName: "Photo URL", width: 200 },
     {
       field: "actions",
       headerName: "Actions",
@@ -38,11 +34,6 @@ const CourtDataGrid = ({refresh, onDelete, onUpdate}) => {
           <Button color="error" onClick={() => onDelete(params.row.id)}>
             Delete
           </Button>
-
-          <Button color="success" onClick={() => onUpdate(params.row)}>
-            Update
-          </Button>
-
         </>
       ),
     },
@@ -51,7 +42,7 @@ const CourtDataGrid = ({refresh, onDelete, onUpdate}) => {
   return (
     <div style={{ height: 400, width: "100%" }}>
       <DataGrid
-        rows={courts}
+        rows={courtImages}
         columns={columns}
         disableRowSelectionOnClick // disables selection
         checkboxSelection={false} // explicitly disables checkboxes
@@ -60,4 +51,4 @@ const CourtDataGrid = ({refresh, onDelete, onUpdate}) => {
   );
 };
 
-export default CourtDataGrid;
+export default CourtImagesDataGrid;

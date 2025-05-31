@@ -78,6 +78,29 @@ const FormDialog = ({
                 </Select>
               </FormControl>
             );
+          } else if (field.type === "file") {
+            return (
+              <div key={field.name}>
+                <InputLabel>{field.label}</InputLabel>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      setFormValues((prev) => ({
+                        ...prev,
+                        [field.name]: file, // store the file object
+                      }));
+                    }
+                  }}
+                  style={{ marginTop: "8px", marginBottom: "16px" }}
+                />
+                {formValues[field.name] && (
+                  <p>Selected: {formValues[field.name].name}</p>
+                )}
+              </div>
+            );
           } else {
             return (
               <TextField

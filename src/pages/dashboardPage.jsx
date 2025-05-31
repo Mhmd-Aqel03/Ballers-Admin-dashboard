@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import CourtTable from "../tables/courtTable";
 import RefereeTable from "../tables/refereeTable";
 import SessionTable from "../tables/sessionTable";
+import CourtImageTable from "../tables/courtImagesTable"
 
 const Dashboard = () => {
   const logout = () => {
@@ -31,11 +32,14 @@ const Dashboard = () => {
         {/* Courts */}
         <CourtTable />
 
+        {/* Court Images */}
+        <CourtImageTable />
         {/* Referees */}
         <RefereeTable />
 
         {/* Sessions */}
         <SessionTable />
+
       </div>
       {/* Footer */}
       <div className="bg-orange-100">
