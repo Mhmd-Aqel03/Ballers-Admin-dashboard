@@ -39,13 +39,6 @@ const Dashboard = () => {
 
         {/* Sessions */}
         <SessionTable />
-
-      </div>
-      {/* Footer */}
-      <div className="bg-orange-100">
-        <br />
-        <br />
-        <p>Me Footer</p>
       </div>
     </div>
   );

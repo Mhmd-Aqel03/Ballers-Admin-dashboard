@@ -36,7 +36,8 @@ const FormDialog = ({
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     onSubmit(formValues);
     onClose();
   };

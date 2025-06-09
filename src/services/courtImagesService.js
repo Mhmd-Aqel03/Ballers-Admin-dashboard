@@ -66,9 +66,7 @@ const createCourtImage = async (data) => {
     window.location.href = "/";
   }
   const imgPhotoUrl = await uploadToImgur(data.photo);
-  print(data);
-  print(imgPhotoUrl);
-  print("JAA");
+  
   const courtImageData = {
     photoUrl: imgPhotoUrl,
   };
