@@ -5,9 +5,8 @@ import { useState } from "react";
 import courtService from "../services/courtsServices";
 import FormDialog from "../components/formDialog";
 
-const CourtTable = () => {
+const CourtTable = ({ refresh, setRefresh }) => {
   const [open, setOpen] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [selectedCourt, setSelectedCourt] = useState({
     id: "",
     name: "",
@@ -18,18 +17,18 @@ const CourtTable = () => {
   });
 
   const handleSubmit = async (data) => {
-    console.log(data)
+    console.log(data);
     if (data.id == null) {
       console.log(data);
       await courtService.createCourt(data);
 
       setRefresh(!refresh);
       setOpen(false);
-    } else{
-        await courtService.updateCourt(data, data.id)
+    } else {
+      await courtService.updateCourt(data, data.id);
 
-        setRefresh(!refresh);
-        setOpen(false);
+      setRefresh(!refresh);
+      setOpen(false);
     }
   };
 

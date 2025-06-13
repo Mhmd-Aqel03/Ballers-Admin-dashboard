@@ -4,12 +4,11 @@ import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import FormDialog from "../components/formDialog";
 import sessionService from "../services/sessionService";
-import refereeService from "../services/refereeService"
+import refereeService from "../services/refereeService";
 import courtsServices from "../services/courtsServices";
 
-const SessionTable = () => {
+const SessionTable = ({ refresh, setRefresh }) => {
   const [open, setOpen] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [selectedSession, setSelectedSession] = useState({
     id: "",
     type: "",
@@ -22,26 +21,26 @@ const SessionTable = () => {
     courtId: "",
     refereeId: "",
   });
-  const [courtIds,setCourtIds] = useState([])
-  const [refereeIds,setRefereeIds] = useState([])
+  const [courtIds, setCourtIds] = useState([]);
+  const [refereeIds, setRefereeIds] = useState([]);
 
   useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const courtsData = await courtsServices.getAllCourts();
-          const refereeData = await refereeService.getAllReferees()
-  
-          const courtIdsList = courtsData.courts;
-          const refereeIdsList = refereeData.referees;
+    const fetchData = async () => {
+      try {
+        const courtsData = await courtsServices.getAllCourts();
+        const refereeData = await refereeService.getAllReferees();
 
-          setCourtIds(courtIdsList);
-          setRefereeIds(refereeIdsList);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      fetchData();
-    }, [refresh]);
+        const courtIdsList = courtsData.courts;
+        const refereeIdsList = refereeData.referees;
+
+        setCourtIds(courtIdsList);
+        setRefereeIds(refereeIdsList);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
+  }, [refresh]);
 
   const handleSubmit = async (data) => {
     console.log(data);
@@ -70,9 +69,11 @@ const SessionTable = () => {
   };
 
   const openEdit = (data) => {
+    console.log(data)
     setSelectedSession(data);
     setOpen(true);
   };
+
   return (
     <div className="mt-9 flex flex-col">
       <div className="flex flex-row justify-between">
@@ -126,13 +127,19 @@ const SessionTable = () => {
             name: "courtId",
             label: "Court ID",
             type: "select",
-            options: courtIds.map((court) => ({ label: court.name, value: court.id })),
+            options: courtIds.map((court) => ({
+              label: court.name,
+              value: court.id,
+            })),
           },
           {
             name: "refereeId",
             label: "Referee ID",
             type: "select",
-            options: refereeIds.map((ref) => ({ label: ref.username, value: ref.id })),
+            options: refereeIds.map((ref) => ({
+              label: ref.username,
+              value: ref.id,
+            })),
           },
         ]}
         initialValues={selectedSession}

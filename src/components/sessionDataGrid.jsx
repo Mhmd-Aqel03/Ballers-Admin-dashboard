@@ -28,7 +28,7 @@ const SessionDataGrid = ({refresh, onDelete, onUpdate}) => {
     { field: "maxPlayers", headerName: "Max Players", width: 200 },
     { field: "price", headerName: "Price", width: 200 },
     { field: "courtId", headerName: "Court Id", width: 200 },
-    { field: "refreeId", headerName: "RefereeId", width: 200 },
+    { field: "refereeId", headerName: "RefereeId", width: 200 },
     {
       field: "actions",
       headerName: "Actions",
@@ -43,7 +43,6 @@ const SessionDataGrid = ({refresh, onDelete, onUpdate}) => {
           <Button color="success" onClick={() => onUpdate(params.row)}>
             Update
           </Button>
-
         </>
       ),
     },

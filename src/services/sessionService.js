@@ -23,7 +23,7 @@ const getAllSessions = async () => {
     } else if (res.status === 500) {
       throw new Error();
     }
-
+    console.log("Sessien data")
     console.log(data);
     return data;
   } catch (error) {
@@ -79,6 +79,7 @@ const updateSession = async (data, id) => {
 
   try {
     const res = await fetch(`${API}/updateSession/${id}`, {
+
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",

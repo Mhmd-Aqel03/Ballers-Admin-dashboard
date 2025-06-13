@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from "react";
 import { Button } from "@mui/material";
 import CourtTable from "../tables/courtTable";
 import RefereeTable from "../tables/refereeTable";
@@ -6,6 +6,8 @@ import SessionTable from "../tables/sessionTable";
 import CourtImageTable from "../tables/courtImagesTable"
 
 const Dashboard = () => {
+  const [refresh, setRefresh] = useState(false);
+
   const logout = () => {
     localStorage.removeItem("token");
     window.location.href = "/";
@@ -30,15 +32,15 @@ const Dashboard = () => {
       {/* Tables */}
       <div className="mx-[50px]">
         {/* Courts */}
-        <CourtTable />
+        <CourtTable refresh={refresh} setRefresh={setRefresh}/>
 
         {/* Court Images */}
-        <CourtImageTable />
+        <CourtImageTable refresh={refresh} setRefresh={setRefresh}/>
         {/* Referees */}
-        <RefereeTable />
+        <RefereeTable refresh={refresh} setRefresh={setRefresh} />
 
         {/* Sessions */}
-        <SessionTable />
+        <SessionTable refresh={refresh} setRefresh={setRefresh} />
       </div>
     </div>
   );

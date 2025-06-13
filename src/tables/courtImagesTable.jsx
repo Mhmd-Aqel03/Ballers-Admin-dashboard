@@ -6,9 +6,8 @@ import courtImagesService from "../services/courtImagesService";
 import courtsServices from "../services/courtsServices";
 import FormDialog from "../components/formDialog";
 
-const CourtImageTable = () => {
+const CourtImageTable = ({ refresh, setRefresh }) => {
   const [open, setOpen] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [selectedCourtImage, setSelectedCourtImage] = useState({
     photoUrl: "",
     courtId: "",
@@ -32,9 +31,6 @@ const CourtImageTable = () => {
   }, [refresh]);
 
   const handleSubmit = async (data) => {
-    console.log(data);
-
-    console.log(data);
     await courtImagesService.createCourtImage(data);
 
     setRefresh(!refresh);

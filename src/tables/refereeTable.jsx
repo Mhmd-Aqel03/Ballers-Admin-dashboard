@@ -5,22 +5,20 @@ import { useState } from "react";
 import refereeService from "../services/refereeService";
 import FormDialog from "../components/formDialog";
 
-const RefereeTable = () => {
+const RefereeTable = ({ refresh, setRefresh }) => {
   const [open, setOpen] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [selectedReferee, setSelectedReferee] = useState({
-    name:"",
-    email:"",
-    password:""
+    name: "",
+    email: "",
+    password: "",
   });
 
   const handleSubmit = async (data) => {
-    console.log(data);
-
-    console.log(data);
     await refereeService.createReferee(data);
 
+    console.log(refresh)
     setRefresh(!refresh);
+    console.log(refresh);
     setOpen(false);
   };
 
@@ -43,8 +41,8 @@ const RefereeTable = () => {
           onClick={() => {
             setSelectedReferee({
               username: "",
-              email:"",
-              password:""
+              email: "",
+              password: "",
             });
             setOpen(true);
           }}
@@ -52,10 +50,7 @@ const RefereeTable = () => {
           Create
         </Button>
       </div>
-      <RefreeDataGrid
-        refresh={refresh}
-        onDelete={handleDelete}
-      />
+      <RefreeDataGrid refresh={refresh} onDelete={handleDelete} />
       <FormDialog
         open={open}
         onClose={() => setOpen(false)}
